@@ -1,24 +1,29 @@
+#!/usr/bin/python3
+
 def canUnlockAll(boxes):
-    # Number of boxes
-    n = len(boxes)
-    
-    # Set to track unlocked boxes, initially only box 0 is unlocked
-    unlocked = set([0])
-    
-    # Set to track keys we have collected
-    keys = set(boxes[0])  # Start with the keys from box 0
-    
-    # We continue processing while we have new keys to check
+    n = len(boxes)  # Total number of boxes
+    unlocked = set([0])  # Start with box 0 unlocked
+    keys = set(boxes[0])  # Collect keys from box 0
+
+    # Continue processing as long as we have keys to check
     while keys:
-        new_key = keys.pop()  # Get one key from the set
+        key = keys.pop()  # Get one key from the set
         
-        # If the new key corresponds to a box number and it's not already unlocked
-        if new_key < n and new_key not in unlocked:
-            # Unlock the box
-            unlocked.add(new_key)
-            # Add the new keys from this box into the keys set
-            keys.update(boxes[new_key])
-    
-    # Check if all boxes are unlocked
+        # If the key corresponds to a valid box and it's not already unlocked
+        if key < n and key not in unlocked:
+            unlocked.add(key)  # Unlock the box
+            keys.update(boxes[key])  # Add the keys from this newly unlocked box
+
+    # If all boxes are unlocked, return True
     return len(unlocked) == n
 
+# Test cases
+if __name__ == "__main__":
+    boxes = [[1], [2], [3], [4], []]
+    print(canUnlockAll(boxes))  # Expected output: True
+
+    boxes = [[1, 4, 6], [2], [0, 4, 1], [5, 6, 2], [3], [4, 1], [6]]
+    print(canUnlockAll(boxes))  # Expected output: True
+
+    boxes = [[1, 4], [2], [0, 4, 1], [3], [], [4, 1], [5, 6]]
+    print(canUnlockAll(boxes))  # Expected output: False
