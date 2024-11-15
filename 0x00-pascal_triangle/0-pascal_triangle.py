@@ -1,15 +1,34 @@
+#!/usr/bin/python3
+"""
+def pascal_triangle(n):
+"""
+"""
+(x + y)^row
+x=first element
+y=last element
+
+x^2 + xy + xy + y^2
+"""
+
+
 def pascal_triangle(n):
     """
-    Returns a list of lists of integers representing Pascal's triangle of n.
+    pascal_triangle that returns a list of lists of
+    integers representing the Pascal’s triangle
     """
-    if n <= 0:
+    if n == 0:
         return []
+    if n == 1:
+        return [[1]]
 
-    triangle = [[1]]  # Initialize the first row of the triangle
+    triangle = [[1]]
+
     for i in range(1, n):
-        prev_row = triangle[-1]  # Get the last row from the triangle
-        # Create the new row by adding pairs of adjacent elements
-        new_row = [1] + [prev_row[j] + prev_row[j + 1] for j in range(len(prev_row) - 1)] + [1]
-        triangle.append(new_row)
+        row = [1]
+        for j in range(1, i):
+            newElement = triangle[i-1][j-1] + triangle[i-1][j]
+            row.append(newElement)
+        row.append(1)
+        triangle.append(row)
 
     return triangle
